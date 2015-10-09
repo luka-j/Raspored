@@ -11,6 +11,9 @@ import java.util.Map;
  * @author luka
  */
 public class Odeljenja {
+    /**
+     * Poslednja 'verzija' rasporeda je došla bez upisanih predmeta (samo imena profesora). Zašto, kako, nemam pojma.
+     */
     public static final boolean HAS_SUBJECTS = false;
 
     private final String razred;

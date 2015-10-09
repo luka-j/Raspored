@@ -82,11 +82,11 @@ public class Raspored {
         outVreme = vreme==JOptionPane.YES_OPTION;
         System.gc();
         
-        /*String in = JOptionPane.showInputDialog("Unesi odeljenje ili ucionicu: ");
+        String in = JOptionPane.showInputDialog("Unesi odeljenje ili ucionicu: ");
         if(in.length()==3)
             new Ucionice(in).obrada();
-        else new Odeljenja(in).obrada();*/
-        testOdeljenja();
+        else new Odeljenja(in).obrada();
+        //testOdeljenja();
         //testUcionice();
         
         try {

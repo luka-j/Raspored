@@ -42,7 +42,7 @@ public class Raspored {
     public static void main(String[] args) {
         if (args.length != 2) {
             String in = JOptionPane.showInputDialog("Lokacija ulaznog fajla (rasporeda):");
-            if(in.isEmpty()) {
+            if (in.isEmpty()) {
                 if (System.getProperty("os.name").contains("nix") || System.getProperty("os.name").contains("nux"))
                     in = "/home/luka/Documents/raspored-2017.xls";
                 else in = "C:/Users/luka/Documents/raspored 201617.xlsx";
@@ -50,9 +50,9 @@ public class Raspored {
             podaciFile = new File(in);
             String out = JOptionPane.showInputDialog("Folder u kojem ce biti kreiran izlazni fajl:");
             if(out.isEmpty())
-                if(System.getProperty("os.name").contains("nix") || System.getProperty("os.name").contains("nux"))
-                    out="/home/luka/Documents/rasporedi sept17/";
-                else out="C:/Users/luka/Documents/rasporedi sept1617/";
+                if (System.getProperty("os.name").contains("nix") || System.getProperty("os.name").contains("nux"))
+                    out = "/home/luka/Documents/rasporedi sept17/";
+                else out = "C:/Users/luka/Documents/rasporedi sept1617/";
             else if(!out.endsWith("/"))
                 out+='/';
             outFolder=out;
@@ -84,13 +84,13 @@ public class Raspored {
                 + " casa umesto rednog broja u izlaznoj tabeli?", "Format izlaza", JOptionPane.YES_NO_OPTION);
         outVreme = vreme==JOptionPane.YES_OPTION;
         System.gc();
-        
+
         String in = JOptionPane.showInputDialog("Unesi odeljenje ili ucionicu: ");
         if(in.length()==3)
             new Ucionice(in).obrada();
-        else if(in.length() == 2)
+        else if (in.length() == 2)
             new Odeljenja(in).obrada();
-        else if(in.equals("test")) {
+        else if (in.equals("test")) {
             testOdeljenja();
             testUcionice();
             System.exit(0);
@@ -140,17 +140,25 @@ public class Raspored {
         for(int i=1; i<=4; i++) {
             for(char j='a'; j<='e'; j++) {
                 new Odeljenja(String.valueOf(i) + String.valueOf(j)).obrada();
-                try {IO.writeXSSF();} catch (IOException ex) {ex.printStackTrace();}
+                try {
+                    IO.writeXSSF();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
-        for(int i=7; i<=8; i++) {
-            for(char j='a'; j<='b'; j++) {
+        for (int i = 7; i <= 8; i++) {
+            for (char j = 'a'; j <= 'b'; j++) {
                 new Odeljenja(String.valueOf(i) + String.valueOf(j)).obrada();
-                try {IO.writeXSSF();} catch (IOException ex) {ex.printStackTrace();}
+                try {
+                    IO.writeXSSF();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
-    
+
     private static final String[] ucionice = {"002", "004", "011", "012", "100", "101", "102", "108", "200", "201", "202", "203",
     "206", "207", "208", "300", "301", "302", "303", "305", "306", "307", "308", "309", "310", "311"};
     public static void testUcionice() {

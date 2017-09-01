@@ -1,10 +1,12 @@
 package raspored;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 /**
+ * Pre upotrebe prebaciti nazive dana u latinicu !
+ * I proveriti da li se svi redovi završavaju istom kolonom (tj. tabela mora biti pravougaona)
  *
  * @author luka
  */
@@ -40,16 +42,17 @@ public class Raspored {
     public static void main(String[] args) {
         if (args.length != 2) {
             String in = JOptionPane.showInputDialog("Lokacija ulaznog fajla (rasporeda):");
-            if(in.isEmpty())
-                if(System.getProperty("os.name").contains("nix"))
-                    in="/home/luka/Documents/raspored mg 201415 2.xlsx";
-                else in = "C:/Users/luka/Documents/raspored mg 201415 2.xlsx";
+            if (in.isEmpty()) {
+                if (System.getProperty("os.name").contains("nix") || System.getProperty("os.name").contains("nux"))
+                    in = "/home/luka/Documents/raspored-2017.xls";
+                else in = "C:/Users/luka/Documents/raspored 201617.xlsx";
+            }
             podaciFile = new File(in);
             String out = JOptionPane.showInputDialog("Folder u kojem ce biti kreiran izlazni fajl:");
             if(out.isEmpty())
-                if(System.getProperty("os.name").contains("nix"))
-                    out="/home/luka/Documents/raspored2/";
-                else out="C:/Users/luka/Documents/raspored2/";
+                if (System.getProperty("os.name").contains("nix") || System.getProperty("os.name").contains("nux"))
+                    out = "/home/luka/Documents/rasporedi sept17/";
+                else out = "C:/Users/luka/Documents/rasporedi sept1617/";
             else if(!out.endsWith("/"))
                 out+='/';
             outFolder=out;
@@ -81,13 +84,18 @@ public class Raspored {
                 + " casa umesto rednog broja u izlaznoj tabeli?", "Format izlaza", JOptionPane.YES_NO_OPTION);
         outVreme = vreme==JOptionPane.YES_OPTION;
         System.gc();
-        
-        /*String in = JOptionPane.showInputDialog("Unesi odeljenje ili ucionicu: ");
+
+        String in = JOptionPane.showInputDialog("Unesi odeljenje ili ucionicu: ");
         if(in.length()==3)
             new Ucionice(in).obrada();
-        else new Odeljenja(in).obrada();*/
-        testOdeljenja();
-        //testUcionice();
+        else if (in.length() == 2)
+            new Odeljenja(in).obrada();
+        else if (in.equals("test")) {
+            testOdeljenja();
+            testUcionice();
+        }
+
+        System.exit(0); // TODO remove when not generating everything !
         
         try {
             if (HSSF) {
@@ -123,7 +131,7 @@ public class Raspored {
      * @param colLet slovo kolone
      * @return index kolone u matrici
      */
-    public static int ColLetToIndex(String colLet) {
+    public static int colLetToIndex(String colLet) {
         colLet = colLet.toUpperCase();
         int zbir = 0;
         for (int i = 0; i < colLet.length(); i++) {
@@ -132,32 +140,31 @@ public class Raspored {
         }
         return zbir - 1;
     }
-
-    /**
-     * ispisuje podatke u matrici.
-     */
-    private void ispis() {
-        for (String[][] podaci1 : podaci) {
-            for (String[] podaci11 : podaci1) {
-                for (String podaci111 : podaci11) {
-                    System.out.print(podaci111 + "\t");
-                }
-                System.out.println("");
-            }
-            System.out.println("\n\n");
-        }
-    }
     
     public static void testOdeljenja() {
         for(int i=1; i<=4; i++) {
             for(char j='a'; j<='e'; j++) {
                 new Odeljenja(String.valueOf(i) + String.valueOf(j)).obrada();
-                try {IO.writeXSSF();} catch (IOException ex) {}
+                try {
+                    IO.writeXSSF();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        for (int i = 7; i <= 8; i++) {
+            for (char j = 'a'; j <= 'b'; j++) {
+                new Odeljenja(String.valueOf(i) + String.valueOf(j)).obrada();
+                try {
+                    IO.writeXSSF();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
-    
-    private static final String[] ucionice = {"002", "004", "011", "012", "100", "101", "102", "200", "201", "202", "203",
+
+    private static final String[] ucionice = {"002", "004", "011", "012", "100", "101", "102", "108", "200", "201", "202", "203",
     "206", "207", "208", "300", "301", "302", "303", "305", "306", "307", "308", "309", "310", "311"};
     public static void testUcionice() {
         for(String ucionica : ucionice) {

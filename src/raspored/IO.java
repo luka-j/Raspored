@@ -1,12 +1,5 @@
 package raspored;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,7 +7,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * @author luka
@@ -176,7 +174,10 @@ public class IO {
             }
         }
         for (int i = 0; i < Raspored.out[0].length; i++) {
-            sheet.autoSizeColumn(i);
+            if (Raspored.out[2][i] != null && Raspored.out[2][i].length() > 3)
+                sheet.setColumnWidth(i, 6000);
+            else
+                sheet.autoSizeColumn(i);
         }
         FileOutputStream out
                 = new FileOutputStream(Raspored.outFile);
